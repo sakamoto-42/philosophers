@@ -5,12 +5,15 @@ CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -pthread
 
 SRCS_FILES = \
-	philo.c \
 	debug.c \
 	ft_atoi.c \
 	ft_itoa.c \
 	handle_errors.c \
+	init_data.c \
+	init_philo.c \
 	parsing.c \
+	philo.c \
+	routine.c \
 	utils.c \
 
 OBJS = $(SRCS_FILES:.c=.o)
