@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 17:40:30 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:15:50 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_data
 	int				number_of_times_each_philosopher_must_eat;
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	*forks;
+	pthread_t		monitoring_thread_id;
+	int				done;
 }	t_data;
 
 typedef struct s_philo
@@ -93,6 +95,11 @@ int		ft_init_philo(t_data *data, t_philo **philo);
 int		ft_alloc_philo(t_data *data, t_philo **philo);
 int		ft_create_philo_threads(t_data *data, t_philo *philo);
 int		ft_join_philo_threads(t_data *data, t_philo *philo);
+
+// monitoring.c
+void	*ft_monitoring(void *param);
+int		ft_create_monitoring_thread(t_data *data);
+int		ft_join_monitoring_thread(t_data *data);
 
 // routine.c
 void	*ft_philo_routine(void *param);

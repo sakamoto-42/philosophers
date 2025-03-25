@@ -12,6 +12,7 @@ SRCS_FILES = \
 	handle_errors.c \
 	init_data.c \
 	init_philo.c \
+	monitoring.c \
 	parsing.c \
 	philo.c \
 	routine.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:05:02 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 14:25:42 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/25 18:07:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		return (ERROR);
 	if (ft_init_data(&data, argc, argv) == ERROR)
 		return (ERROR);
-	ft_print_data(&data);
+	//ft_print_data(&data);
 	if (ft_init_philo(&data, &philo) == ERROR)
 		return (ERROR);
 	ft_destroy_and_free(&data, philo);
