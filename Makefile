@@ -15,6 +15,8 @@ SRCS_FILES = \
 	parsing.c \
 	philo.c \
 	routine.c \
+	routine_actions.c \
+	routine_actions_utils.c \
 	utils.c \
 
 OBJS = $(SRCS_FILES:.c=.o)

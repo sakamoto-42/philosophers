@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:58 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 16:20:20 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:36:01 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	ft_create_philo_threads(t_data *data, t_philo *philo)
 	while (i < data->number_of_philosophers)
 	{
 		philo[i].id = i + 1;
-		philo[i].data = data;
-		ft_set_forks(philo, i, data->number_of_philosophers);
 		if (pthread_create(&philo[i].thread_id, NULL,
 				ft_philo_routine, (void *)&philo[i]) != 0)
 		{
@@ -62,6 +60,9 @@ int	ft_create_philo_threads(t_data *data, t_philo *philo)
 			ft_print_error(" failed\n");
 			return (ERROR);
 		}
+		philo[i].data = data;
+		ft_set_forks(philo, i, data->number_of_philosophers);
+		philo[i].meals_eaten = 0;
 		i++;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 16:46:49 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:39:08 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 void	*ft_philo_routine(void *param)
 {
 	t_philo			*philo;
-
+	
 	philo = (t_philo *)param;
-	ft_eat(philo);
-	ft_sleep(philo);
-	ft_think(philo);
+	while (philo->meals_eaten < philo->data->number_of_times_each_philosopher_must_eat)
+	{
+		ft_eat(philo);
+		ft_sleep(philo);
+		ft_think(philo);
+	}
 	return (NULL);
 }
 

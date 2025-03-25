@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 16:21:41 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:40:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_philo
 	t_data			*data;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int				meals_eaten;
 }	t_philo;
 
 // debug.c
@@ -96,6 +97,15 @@ int		ft_join_philo_threads(t_data *data, t_philo *philo);
 // routine.c
 void	*ft_philo_routine(void *param);
 void	ft_print_info(t_philo *philo, char *str);
+
+// routine_actions.c
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
+
+// routine_actions_utils.c
+void	ft_lock_forks(t_philo *philo);
+void	ft_unlock_forks(t_philo *philo);
 
 // utils.c
 size_t	ft_strlen(char *str);
