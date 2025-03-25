@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 18:15:50 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 18:49:01 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_data
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	*forks;
 	pthread_t		monitoring_thread_id;
-	int				done;
+	int				simulation_finished;
 }	t_data;
 
 typedef struct s_philo
@@ -62,6 +62,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	int				meals_eaten;
+	pthread_mutex_t	meals_eaten_mutex;
 }	t_philo;
 
 // debug.c

@@ -6,35 +6,45 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/25 18:21:35 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/25 19:00:01 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_check_all_philos_ate_enough(t_data *data)
+{
+	//int	i;
+
+	//i = 0;
+	(void)data;
+	return (1);
+}
 
 void	*ft_monitoring(void *param)
 {
 	t_data	*data;
 
 	data = (t_data *)param;
-	while (1)
+	while (!data->simulation_finished)
 	{
-		pthread_mutex_lock(&data->printf_mutex);
-		printf("I WATCH\n");
-		pthread_mutex_unlock(&data->printf_mutex);
-		usleep(400 * 1000);
-	}	
+		data->simulation_finished = ft_check_all_philos_ate_enough(data);
+		//pthread_mutex_lock(&data->printf_mutex);
+		//printf("I WATCH\n");
+		//pthread_mutex_unlock(&data->printf_mutex);
+		usleep(1000 * 1000);
+	}
 	return (NULL);
 }
 
 int	ft_create_monitoring_thread(t_data *data)
 {
 	if (pthread_create(&data->monitoring_thread_id, NULL,
-				ft_monitoring, (void *)&data) != 0)
-		{
-			ft_print_error("Error: pthread_create monitoring failed\n");
-			return (ERROR);
-		}
+			ft_monitoring, (void *)&data) != 0)
+	{
+		ft_print_error("Error: pthread_create monitoring failed\n");
+		return (ERROR);
+	}
 	return (SUCCESS);
 }
 
