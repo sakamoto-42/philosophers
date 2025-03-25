@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 14:26:11 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/25 16:21:41 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread_id;
 	t_data			*data;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 }	t_philo;
 
 // debug.c
@@ -83,6 +85,9 @@ int		ft_check_args_valid(int argc, char **argv);
 // init_data.c
 int		ft_init_data(t_data *data, int argc, char **argv);
 int		ft_init_forks(t_data *data);
+
+// init_philo.c
+void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers);
 int		ft_init_philo(t_data *data, t_philo **philo);
 int		ft_alloc_philo(t_data *data, t_philo **philo);
 int		ft_create_philo_threads(t_data *data, t_philo *philo);

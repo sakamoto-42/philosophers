@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 10:19:06 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/25 16:29:20 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@ void	*ft_philo_routine(void *param)
 	t_philo			*philo;
 
 	philo = (t_philo *)param;
+	pthread_mutex_lock(philo->left_fork);
+	ft_print_info(philo, "has taken a fork\n");
+	pthread_mutex_lock(philo->right_fork);
 	ft_print_info(philo, "has taken a fork\n");
 	ft_print_info(philo, "is eating \n");
-	usleep(philo->data->time_to_eat);
+	usleep(philo->data->time_to_eat * 1000);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 	ft_print_info(philo, "is sleeping\n");
-	usleep(philo->data->time_to_sleep);
+	usleep(philo->data->time_to_sleep * 1000);
 	ft_print_info(philo, "is thinking\n");
 	return (NULL);
 }

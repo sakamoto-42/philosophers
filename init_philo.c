@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:58 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 11:11:48 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/25 16:20:20 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ int	ft_alloc_philo(t_data *data, t_philo **philo)
 	return (SUCCESS);
 }
 
+void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers)
+{
+	int	right_philo_index;
+
+	right_philo_index = (i + 1) % number_of_philosophers;
+	philo[i].left_fork = &philo->data->forks[i];
+	philo[i].right_fork = &philo->data->forks[right_philo_index];
+}
+
 int	ft_create_philo_threads(t_data *data, t_philo *philo)
 {
 	int	i;
@@ -44,6 +53,7 @@ int	ft_create_philo_threads(t_data *data, t_philo *philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].data = data;
+		ft_set_forks(philo, i, data->number_of_philosophers);
 		if (pthread_create(&philo[i].thread_id, NULL,
 				ft_philo_routine, (void *)&philo[i]) != 0)
 		{
