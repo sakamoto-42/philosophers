@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 11:11:24 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/25 14:26:11 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct s_philo
 
 // debug.c
 void	ft_print_data(t_data *data);
+
+// destroy_and_free.c
+void	ft_destroy_and_free(t_data *data, t_philo *philo);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);

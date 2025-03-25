@@ -6,6 +6,7 @@ LDFLAGS = -pthread
 
 SRCS_FILES = \
 	debug.c \
+	destroy_and_free.c \
 	ft_atoi.c \
 	ft_itoa.c \
 	handle_errors.c \
