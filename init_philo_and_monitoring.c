@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:20:06 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 13:31:15 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:22:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ int	ft_init_philo_and_monitoring(t_data *data,
 {
 	if (ft_alloc_philo(data, philo) == ERROR)
 		return (ERROR);
-	ft_init_philo(data, *philo);
+	if (ft_init_philo(data, *philo) == ERROR)
+		return (ERROR);
 	if (ft_alloc_monitoring(monitoring) == ERROR)
 		return (ERROR);
-	ft_init_monitoring(data, *philo, *monitoring);
+	if (ft_init_monitoring(data, *philo, *monitoring) == ERROR)
+		return (ERROR);
 	ft_link_monitoring_to_philo(data, *philo, *monitoring);
 	if (ft_create_philo_threads(data, *philo) == ERROR)
 		return (ERROR);

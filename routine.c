@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 14:01:46 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:39:23 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_philo_routine(void *param)
 
 	philo = (t_philo *)param;
 	while (!ft_mutex_is_simulation_finished(philo->monitoring)
-		&& (philo->data->number_of_times_each_philosopher_must_eat == 0
-			|| (philo->meals_eaten < philo->data->number_of_times_each_philosopher_must_eat)))
+		&& (philo->data->meals_required == 0
+			|| (philo->meals_eaten < philo->data->meals_required)))
 	{
 		ft_eat(philo);
 		pthread_mutex_lock(&philo->data->printf_mutex);

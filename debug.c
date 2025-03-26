@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:44:48 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 09:47:22 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 15:38:31 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	ft_print_data(t_data *data)
 	printf("time_to_eat: %d\n", data->time_to_eat);
 	printf("time_to_sleep: %d\n", data->time_to_sleep);
 	printf("number_of_times_each_philosopher_must_eat: %d\n",
-		data->number_of_times_each_philosopher_must_eat);
+		data->meals_required);
 }

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 13:41:24 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:22:57 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_times_each_philosopher_must_eat;
+	int				meals_required;
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	*forks;
 }	t_data;
@@ -80,7 +80,7 @@ typedef struct s_philo
 void	ft_print_data(t_data *data);
 
 // destroy_and_free.c
-void	ft_destroy_and_free(t_data *data, t_philo *philo);
+void	ft_destroy_and_free(t_data *data, t_philo *philo, t_monitoring *s_monitoring);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
@@ -109,14 +109,14 @@ void	ft_link_monitoring_to_philo(t_data *data, t_philo *philo,
 
 // init_philo.c
 int		ft_alloc_philo(t_data *data, t_philo **philo);
-void	ft_init_philo(t_data *data, t_philo *philo);
+int		ft_init_philo(t_data *data, t_philo *philo);
 void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers);
 int		ft_create_philo_threads(t_data *data, t_philo *philo);
 int		ft_join_philo_threads(t_data *data, t_philo *philo);
 
 // init_monitoring.c
 int		ft_alloc_monitoring(t_monitoring **monitoring);
-void	ft_init_monitoring(t_data *data, t_philo *philo,
+int		ft_init_monitoring(t_data *data, t_philo *philo,
 	t_monitoring *monitoring);
 int		ft_create_monitoring_thread(t_monitoring *monitoring);
 int		ft_join_monitoring_thread(t_monitoring *monitoring);

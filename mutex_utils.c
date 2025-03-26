@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:45:38 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 13:45:57 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:30:56 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_mutex_is_simulation_finished(t_monitoring *monitoring)
 	int	result;
 	pthread_mutex_lock(&monitoring->simulation_finished_mutex);
 	result = monitoring->simulation_finished;
-	//result = 1;
 	pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
 	return (result);
 }

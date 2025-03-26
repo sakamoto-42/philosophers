@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:45 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 11:24:21 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 15:39:36 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc - 1 == NB_ARGS)
-		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+		data->meals_required = ft_atoi(argv[5]);
 	else
-		data->number_of_times_each_philosopher_must_eat = 0;
+		data->meals_required = 0;
 	if (pthread_mutex_init(&data->printf_mutex, NULL) != 0)
 		return (ERROR);
 	if (ft_init_forks(data) == ERROR)

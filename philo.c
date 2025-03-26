@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:05:02 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 13:20:04 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:33:27 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(int argc, char **argv)
 	if (ft_init_philo_and_monitoring(&data, &philo,
 			&monitoring) == ERROR)
 		return (ERROR);
-	ft_destroy_and_free(&data, philo);
+	ft_destroy_and_free(&data, philo, monitoring);
 	return (SUCCESS);
 }
