@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 17:07:10 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:35:22 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ void	*ft_monitoring(void *param)
 	pthread_mutex_unlock(&monitoring->data->printf_mutex);
 	return (NULL);
 }
-

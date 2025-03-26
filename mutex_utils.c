@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:45:38 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 16:30:56 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:35:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_mutex_unlock_forks(t_philo *philo)
 int	ft_mutex_is_simulation_finished(t_monitoring *monitoring)
 {
 	int	result;
+
 	pthread_mutex_lock(&monitoring->simulation_finished_mutex);
 	result = monitoring->simulation_finished;
 	pthread_mutex_unlock(&monitoring->simulation_finished_mutex);

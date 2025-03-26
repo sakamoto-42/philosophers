@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 16:22:57 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:37:12 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define NB_ARGS 5
 # define COUNT 10000
 
-typedef struct s_philo t_philo;
-typedef struct s_monitoring t_monitoring;
+typedef struct s_philo		t_philo;
+typedef struct s_monitoring	t_monitoring;
 
 typedef struct s_data
 {
@@ -73,14 +73,15 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				meals_eaten;
 	pthread_mutex_t	meals_eaten_mutex;
-	t_monitoring 	*monitoring;
+	t_monitoring	*monitoring;
 }	t_philo;
 
 // debug.c
 void	ft_print_data(t_data *data);
 
 // destroy_and_free.c
-void	ft_destroy_and_free(t_data *data, t_philo *philo, t_monitoring *s_monitoring);
+void	ft_destroy_and_free(t_data *data, t_philo *philo,
+			t_monitoring *s_monitoring);
 
 // ft_atoi.c
 int		ft_atoi(const char *nptr);
@@ -103,9 +104,9 @@ int		ft_init_forks(t_data *data);
 
 // init_philo_and_monitoring.c
 int		ft_init_philo_and_monitoring(t_data *data,
-	t_philo **philo, t_monitoring **monitoring);
+			t_philo **philo, t_monitoring **monitoring);
 void	ft_link_monitoring_to_philo(t_data *data, t_philo *philo,
-	t_monitoring *monitoring);
+			t_monitoring *monitoring);
 
 // init_philo.c
 int		ft_alloc_philo(t_data *data, t_philo **philo);
@@ -117,10 +118,9 @@ int		ft_join_philo_threads(t_data *data, t_philo *philo);
 // init_monitoring.c
 int		ft_alloc_monitoring(t_monitoring **monitoring);
 int		ft_init_monitoring(t_data *data, t_philo *philo,
-	t_monitoring *monitoring);
+			t_monitoring *monitoring);
 int		ft_create_monitoring_thread(t_monitoring *monitoring);
 int		ft_join_monitoring_thread(t_monitoring *monitoring);
-
 
 // monitoring.c
 void	*ft_monitoring(void *param);

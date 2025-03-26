@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:20:06 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 16:22:32 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:37:32 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	ft_init_philo_and_monitoring(t_data *data,
 	return (SUCCESS);
 }
 
-void	ft_link_monitoring_to_philo(t_data *data, t_philo *philo, t_monitoring *monitoring)
+void	ft_link_monitoring_to_philo(t_data *data, t_philo *philo,
+		t_monitoring *monitoring)
 {
 	int	i;
 
