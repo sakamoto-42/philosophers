@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:45:38 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 10:59:00 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 13:45:57 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	ft_mutex_unlock_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-int	ft_mutex_is_simulation_finished(t_data *data)
+int	ft_mutex_is_simulation_finished(t_monitoring *monitoring)
 {
 	int	result;
-
-	pthread_mutex_lock(&data->simulation_finished_mutex);
-	result = data->simulation_finished;
-	pthread_mutex_unlock(&data->simulation_finished_mutex);
+	pthread_mutex_lock(&monitoring->simulation_finished_mutex);
+	result = monitoring->simulation_finished;
+	//result = 1;
+	pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
 	return (result);
 }

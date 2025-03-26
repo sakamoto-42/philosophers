@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_and_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:25:26 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 10:56:17 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 12:40:17 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_destroy_and_free(t_data *data, t_philo *philo)
 		i++;
 	}
 	pthread_mutex_destroy(&data->printf_mutex);
-	pthread_mutex_destroy(&data->simulation_finished_mutex);
+	//pthread_mutex_destroy(&data->simulation_finished_mutex);
 	free(data->forks);
 	free(philo);
 }

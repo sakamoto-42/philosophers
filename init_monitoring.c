@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_monitoring.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 11:16:10 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 11:48:37 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 13:21:51 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	ft_init_monitoring(t_data *data, t_philo *philo,
 	monitoring->philo = philo;
 }
 
-int	ft_create_monitoring_thread(t_data *data)
+int	ft_create_monitoring_thread(t_monitoring *monitoring)
 {
-	if (pthread_create(&data->monitoring_thread_id, NULL,
-			ft_monitoring, (void *)&data) != 0)
+	if (pthread_create(&monitoring->thread_id, NULL,
+			ft_monitoring, (void *)&monitoring) != 0)
 	{
 		ft_print_error("Error: pthread_create monitoring failed\n");
 		return (ERROR);
@@ -42,9 +42,9 @@ int	ft_create_monitoring_thread(t_data *data)
 	return (SUCCESS);
 }
 
-int	ft_join_monitoring_thread(t_data *data)
+int	ft_join_monitoring_thread(t_monitoring *monitoring)
 {
-	if (pthread_join(data->monitoring_thread_id, NULL) != 0)
+	if (pthread_join(monitoring->thread_id, NULL) != 0)
 	{
 		ft_print_error("Error: pthread_join monitoring failed\n");
 		return (ERROR);

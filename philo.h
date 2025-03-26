@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 11:22:42 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 13:41:24 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define NB_ARGS 5
 # define COUNT 10000
 
+typedef struct s_philo t_philo;
+typedef struct s_monitoring t_monitoring;
+
 typedef struct s_data
 {
 	long			start_time_in_ms;
@@ -52,6 +55,15 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 }	t_data;
 
+typedef struct s_monitoring
+{
+	t_data			*data;
+	t_philo			*philo;
+	pthread_t		thread_id;
+	int				simulation_finished;
+	pthread_mutex_t	simulation_finished_mutex;
+}	t_monitoring;
+
 typedef struct s_philo
 {
 	int				id;
@@ -61,16 +73,8 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				meals_eaten;
 	pthread_mutex_t	meals_eaten_mutex;
+	t_monitoring 	*monitoring;
 }	t_philo;
-
-typedef struct s_monitoring
-{
-	t_data			*data;
-	t_philo			*philo;
-	pthread_t		thread_id;
-	int				simulation_finished;
-	pthread_mutex_t	simulation_finished_mutex;
-}	t_monitoring;
 
 // debug.c
 void	ft_print_data(t_data *data);
@@ -97,17 +101,29 @@ int		ft_check_args_valid(int argc, char **argv);
 int		ft_init_data(t_data *data, int argc, char **argv);
 int		ft_init_forks(t_data *data);
 
+// init_philo_and_monitoring.c
+int		ft_init_philo_and_monitoring(t_data *data,
+	t_philo **philo, t_monitoring **monitoring);
+void	ft_link_monitoring_to_philo(t_data *data, t_philo *philo,
+	t_monitoring *monitoring);
+
 // init_philo.c
-void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers);
-int		ft_init_philo(t_data *data, t_philo **philo);
 int		ft_alloc_philo(t_data *data, t_philo **philo);
+void	ft_init_philo(t_data *data, t_philo *philo);
+void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers);
 int		ft_create_philo_threads(t_data *data, t_philo *philo);
 int		ft_join_philo_threads(t_data *data, t_philo *philo);
 
+// init_monitoring.c
+int		ft_alloc_monitoring(t_monitoring **monitoring);
+void	ft_init_monitoring(t_data *data, t_philo *philo,
+	t_monitoring *monitoring);
+int		ft_create_monitoring_thread(t_monitoring *monitoring);
+int		ft_join_monitoring_thread(t_monitoring *monitoring);
+
+
 // monitoring.c
 void	*ft_monitoring(void *param);
-int		ft_create_monitoring_thread(t_data *data);
-int		ft_join_monitoring_thread(t_data *data);
 
 // routine.c
 void	*ft_philo_routine(void *param);
@@ -121,7 +137,7 @@ void	ft_think(t_philo *philo);
 // mutex_utils.c
 void	ft_mutex_lock_forks(t_philo *philo);
 void	ft_mutex_unlock_forks(t_philo *philo);
-int		ft_mutex_is_simulation_finished(t_data *data);
+int		ft_mutex_is_simulation_finished(t_monitoring *monitoring);
 
 // utils.c
 size_t	ft_strlen(char *str);

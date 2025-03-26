@@ -12,6 +12,8 @@ SRCS_FILES = \
 	handle_errors.c \
 	init_data.c \
 	init_philo.c \
+	init_monitoring.c \
+	init_philo_and_monitoring.c \
 	monitoring.c \
 	mutex_utils.c \
 	parsing.c \

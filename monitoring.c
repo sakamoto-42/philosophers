@@ -3,41 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 11:23:16 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/26 14:08:15 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_check_all_philos_ate_enough(t_data *data)
+int	ft_check_all_philos_ate_enough(t_monitoring *monitoring)
 {
-	//int	i;
+	int	i;
+	int	count;
 
-	//i = 0;
-	(void)data;
-	return (1);
+	i = 0;
+	count = 0;
+	while (i < monitoring->data->number_of_philosophers)
+	{
+		if (monitoring->philo[i].meals_eaten >= monitoring->data->number_of_times_each_philosopher_must_eat)
+			count++;
+		i++;
+	}
+	return (count == monitoring->data->number_of_philosophers);
 }
-
-
 
 void	*ft_monitoring(void *param)
 {
-	t_data	*data;
+	t_monitoring	*monitoring;
+	int				result;
 
-	data = (t_data *)param;
-	while (!ft_mutex_is_simulation_finished(data))
+	monitoring = (t_monitoring *)param;
+	while (!ft_mutex_is_simulation_finished(monitoring))
 	{
-		pthread_mutex_lock(&data->printf_mutex);
-		data->simulation_finished = ft_check_all_philos_ate_enough(data);
-		pthread_mutex_unlock(&data->printf_mutex);
-		
-		//pthread_mutex_lock(&data->printf_mutex);
-		//printf("I WATCH\n");
-		//pthread_mutex_unlock(&data->printf_mutex);
-		usleep(1000 * 1000);
+		if (monitoring->data->number_of_times_each_philosopher_must_eat != 0)
+		{
+			result = ft_check_all_philos_ate_enough(monitoring);
+			pthread_mutex_lock(&monitoring->simulation_finished_mutex);
+			monitoring->simulation_finished = 1;
+			pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
+		}
+		usleep(100 * 1000);
 	}
 	return (NULL);
 }
