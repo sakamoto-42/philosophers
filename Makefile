@@ -13,11 +13,11 @@ SRCS_FILES = \
 	init_data.c \
 	init_philo.c \
 	monitoring.c \
+	mutex_utils.c \
 	parsing.c \
 	philo.c \
 	routine.c \
 	routine_actions.c \
-	routine_actions_utils.c \
 	utils.c \
 
 OBJS = $(SRCS_FILES:.c=.o)

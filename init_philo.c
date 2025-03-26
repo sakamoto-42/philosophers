@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:58 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 18:09:45 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:44:13 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_init_philo(t_data *data, t_philo **philo)
-{
-	if (ft_alloc_philo(data, philo) == ERROR)
-		return (ERROR);
-	if (ft_create_philo_threads(data, *philo) == ERROR)
-		return (ERROR);
-	if (ft_create_monitoring_thread(data) == ERROR)
-		return (ERROR);
-	if (ft_join_philo_threads(data, *philo) == ERROR)
-		return (ERROR);
-	if (ft_join_monitoring_thread(data) == ERROR)
-		return (ERROR);
-	return (SUCCESS);
-}
 
 int	ft_alloc_philo(t_data *data, t_philo **philo)
 {
@@ -37,6 +22,21 @@ int	ft_alloc_philo(t_data *data, t_philo **philo)
 	}
 	memset(*philo, 0, data->number_of_philosophers * sizeof(t_philo));
 	return (SUCCESS);
+}
+
+void	ft_init_philo(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		philo[i].id = i + 1;
+		philo[i].data = data;
+		ft_set_forks(philo, i, data->number_of_philosophers);
+		philo[i].meals_eaten = 0;
+		i++;
+	}
 }
 
 void	ft_set_forks(t_philo *philo, int i, int number_of_philosophers)
@@ -55,7 +55,6 @@ int	ft_create_philo_threads(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
-		philo[i].id = i + 1;
 		if (pthread_create(&philo[i].thread_id, NULL,
 				ft_philo_routine, (void *)&philo[i]) != 0)
 		{
@@ -64,9 +63,6 @@ int	ft_create_philo_threads(t_data *data, t_philo *philo)
 			ft_print_error(" failed\n");
 			return (ERROR);
 		}
-		philo[i].data = data;
-		ft_set_forks(philo, i, data->number_of_philosophers);
-		philo[i].meals_eaten = 0;
 		i++;
 	}
 	return (SUCCESS);

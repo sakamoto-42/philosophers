@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 18:49:01 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:22:42 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ typedef struct s_data
 	int				number_of_times_each_philosopher_must_eat;
 	pthread_mutex_t	printf_mutex;
 	pthread_mutex_t	*forks;
-	pthread_t		monitoring_thread_id;
-	int				simulation_finished;
 }	t_data;
 
 typedef struct s_philo
@@ -64,6 +62,15 @@ typedef struct s_philo
 	int				meals_eaten;
 	pthread_mutex_t	meals_eaten_mutex;
 }	t_philo;
+
+typedef struct s_monitoring
+{
+	t_data			*data;
+	t_philo			*philo;
+	pthread_t		thread_id;
+	int				simulation_finished;
+	pthread_mutex_t	simulation_finished_mutex;
+}	t_monitoring;
 
 // debug.c
 void	ft_print_data(t_data *data);
@@ -111,9 +118,10 @@ void	ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 
-// routine_actions_utils.c
-void	ft_lock_forks(t_philo *philo);
-void	ft_unlock_forks(t_philo *philo);
+// mutex_utils.c
+void	ft_mutex_lock_forks(t_philo *philo);
+void	ft_mutex_unlock_forks(t_philo *philo);
+int		ft_mutex_is_simulation_finished(t_data *data);
 
 // utils.c
 size_t	ft_strlen(char *str);

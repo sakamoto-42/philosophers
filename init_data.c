@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:45 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 18:36:00 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:24:21 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_init_data(t_data *data, int argc, char **argv)
 		return (ERROR);
 	if (ft_init_forks(data) == ERROR)
 		return (ERROR);
-	data->simulation_finished = 0;
 	return (SUCCESS);
 }
 

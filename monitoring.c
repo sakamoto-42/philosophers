@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/25 19:00:01 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:23:16 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,19 @@ int	ft_check_all_philos_ate_enough(t_data *data)
 	return (1);
 }
 
+
+
 void	*ft_monitoring(void *param)
 {
 	t_data	*data;
 
 	data = (t_data *)param;
-	while (!data->simulation_finished)
+	while (!ft_mutex_is_simulation_finished(data))
 	{
+		pthread_mutex_lock(&data->printf_mutex);
 		data->simulation_finished = ft_check_all_philos_ate_enough(data);
+		pthread_mutex_unlock(&data->printf_mutex);
+		
 		//pthread_mutex_lock(&data->printf_mutex);
 		//printf("I WATCH\n");
 		//pthread_mutex_unlock(&data->printf_mutex);
@@ -37,23 +42,3 @@ void	*ft_monitoring(void *param)
 	return (NULL);
 }
 
-int	ft_create_monitoring_thread(t_data *data)
-{
-	if (pthread_create(&data->monitoring_thread_id, NULL,
-			ft_monitoring, (void *)&data) != 0)
-	{
-		ft_print_error("Error: pthread_create monitoring failed\n");
-		return (ERROR);
-	}
-	return (SUCCESS);
-}
-
-int	ft_join_monitoring_thread(t_data *data)
-{
-	if (pthread_join(data->monitoring_thread_id, NULL) != 0)
-	{
-		ft_print_error("Error: pthread_join monitoring failed\n");
-		return (ERROR);
-	}
-	return (SUCCESS);
-}
