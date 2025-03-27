@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:31:59 by julien            #+#    #+#             */
-/*   Updated: 2025/03/27 10:54:45 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:26:28 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_usleep_interruptible(long time_to_usleep_in_ms, t_philo *philo)
 	finished = 0;
 	while (now - start < time_to_usleep_in_ms && !finished)
 	{
-		usleep(100);
+		usleep(500);
 		now = ft_get_time_in_ms();
 		finished = ft_mutex_is_simulation_finished(philo->monitoring);
 	}

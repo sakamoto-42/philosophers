@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:45:38 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 13:56:15 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/27 14:44:11 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_mutex_lock_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
+		usleep(100);
 		pthread_mutex_lock(philo->left_fork);
 		ft_print_info(philo, "has taken a fork\n");
 		pthread_mutex_lock(philo->right_fork);

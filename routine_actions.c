@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:44:55 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 13:58:56 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/27 15:35:30 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 void	ft_eat(t_philo *philo)
 {
-	if (!ft_mutex_is_simulation_finished(philo->monitoring))
+	if (ft_mutex_is_simulation_finished(philo->monitoring))
+		return ;
+	ft_mutex_lock_forks(philo);
+	if (ft_mutex_is_simulation_finished(philo->monitoring))
 	{
-		ft_mutex_lock_forks(philo);
-		ft_print_info(philo, "is eating \n");
+		ft_mutex_unlock_forks(philo);
+		return ;
 	}
+	pthread_mutex_lock(&philo->last_meal_time_mutex);
+	philo->last_meal_time = ft_get_time_in_ms();
+	pthread_mutex_unlock(&philo->last_meal_time_mutex);
+	ft_print_info(philo, "is eating \n");
 	ft_usleep_interruptible(philo->data->time_to_eat, philo);
 	if (ft_mutex_is_simulation_finished(philo->monitoring))
 	{
@@ -29,9 +36,6 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->meals_eaten_mutex);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meals_eaten_mutex);
-	pthread_mutex_lock(&philo->last_meal_time_mutex);
-	philo->last_meal_time = ft_get_time_in_ms();
-	pthread_mutex_unlock(&philo->last_meal_time_mutex);
 }
 
 void	ft_sleep(t_philo *philo)
