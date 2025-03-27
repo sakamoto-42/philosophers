@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/27 11:31:29 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:14:03 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	*ft_philo_routine(void *param)
 	return (NULL);
 }
 
-
 void	*ft_one_philo_routine(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	ft_print_info(philo, "has taken a fork\n");
 	ft_usleep_interruptible(philo->data->time_to_die, philo);
-	ft_mutex_unlock_forks(philo);
+	pthread_mutex_unlock(philo->left_fork);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 11:16:19 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:04:37 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ int	ft_check_philo_starve(t_monitoring *monitoring)
 	{
 		pthread_mutex_lock(&monitoring->philo[i].last_meal_time_mutex);
 		last_meal_time = monitoring->philo[i].last_meal_time;
+		pthread_mutex_unlock(&monitoring->philo[i].last_meal_time_mutex);
 		if (time_in_ms - last_meal_time >= monitoring->data->time_to_die)
 		{
-			usleep(1);
+			usleep(10);
 			pthread_mutex_lock(&monitoring->data->printf_mutex);
 			printf("[%ldms] %d %s", time_in_ms - last_meal_time, monitoring->philo->id, "died\n");
 			pthread_mutex_unlock(&monitoring->data->printf_mutex);
 			return (1);
 		}
-		pthread_mutex_unlock(&monitoring->philo[i].last_meal_time_mutex);
 		i++;
 	}
 	return (0);
@@ -78,7 +78,7 @@ void	*ft_monitoring(void *param)
 				pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
 			}
 		}
-		usleep(10);
+		usleep(1);
 	}
 	return (NULL);
 }
