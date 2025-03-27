@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 13:04:37 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:49:44 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ int	ft_check_all_philos_ate_enough(t_monitoring *monitoring)
 		pthread_mutex_unlock(&monitoring->philo[i].meals_eaten_mutex);
 		i++;
 	}
-	pthread_mutex_lock(&monitoring->data->printf_mutex);
-	printf("all philos ate enough\n");
-	pthread_mutex_unlock(&monitoring->data->printf_mutex);
+	if (!ft_mutex_is_simulation_finished(monitoring))
+	{
+		pthread_mutex_lock(&monitoring->data->printf_mutex);
+		printf("all philos ate enough\n");
+		pthread_mutex_unlock(&monitoring->data->printf_mutex);
+	}
 	return (1);
 }
 
@@ -51,9 +54,9 @@ int	ft_check_philo_starve(t_monitoring *monitoring)
 		pthread_mutex_unlock(&monitoring->philo[i].last_meal_time_mutex);
 		if (time_in_ms - last_meal_time >= monitoring->data->time_to_die)
 		{
-			usleep(10);
 			pthread_mutex_lock(&monitoring->data->printf_mutex);
-			printf("[%ldms] %d %s", time_in_ms - last_meal_time, monitoring->philo->id, "died\n");
+			printf("[%ldms] %d %s", time_in_ms - last_meal_time,
+				monitoring->philo[i].id, "died\n");
 			pthread_mutex_unlock(&monitoring->data->printf_mutex);
 			return (1);
 		}
@@ -69,16 +72,20 @@ void	*ft_monitoring(void *param)
 	monitoring = (t_monitoring *)param;
 	while (!ft_mutex_is_simulation_finished(monitoring))
 	{
-		if (monitoring->data->meals_required != 0)
+		if (ft_check_philo_starve(monitoring) == 1)
 		{
-			if (ft_check_all_philos_ate_enough(monitoring) == 1 || ft_check_philo_starve(monitoring) == 1)
-			{
-				pthread_mutex_lock(&monitoring->simulation_finished_mutex);
-				monitoring->simulation_finished = 1;
-				pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
-			}
+			pthread_mutex_lock(&monitoring->simulation_finished_mutex);
+			monitoring->simulation_finished = 1;
+			pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
 		}
-		usleep(1);
+		else if (monitoring->data->meals_required != 0
+			&& ft_check_all_philos_ate_enough(monitoring) == 1)
+		{
+			pthread_mutex_lock(&monitoring->simulation_finished_mutex);
+			monitoring->simulation_finished = 1;
+			pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
+		}
+		usleep(10);
 	}
 	return (NULL);
 }

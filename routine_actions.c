@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 16:44:55 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 11:38:44 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:58:56 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->meals_eaten_mutex);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meals_eaten_mutex);
-	
-	ft_print_info(philo, "ate ");
-	pthread_mutex_lock(&philo->data->printf_mutex);
-	printf("%d meals\n", philo->meals_eaten);
-	pthread_mutex_unlock(&philo->data->printf_mutex);
-	
 	pthread_mutex_lock(&philo->last_meal_time_mutex);
 	philo->last_meal_time = ft_get_time_in_ms();
 	pthread_mutex_unlock(&philo->last_meal_time_mutex);
