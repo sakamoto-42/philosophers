@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/27 13:56:44 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/27 16:09:15 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,6 @@ typedef struct s_philo
 	t_monitoring	*monitoring;
 }	t_philo;
 
-// debug.c
-void	ft_print_data(t_data *data);
-
 // destroy_and_free.c
 void	ft_destroy_and_free(t_data *data, t_philo *philo,
 			t_monitoring *s_monitoring);
@@ -126,6 +123,8 @@ int		ft_join_monitoring_thread(t_monitoring *monitoring);
 
 // monitoring.c
 void	*ft_monitoring(void *param);
+int		ft_check_all_philos_ate_enough(t_monitoring *monitoring);
+int		ft_check_philo_starve(t_monitoring *monitoring);
 
 // routine.c
 void	*ft_philo_routine(void *param);
@@ -134,6 +133,7 @@ void	ft_print_info(t_philo *philo, char *str);
 
 // routine_actions.c
 void	ft_eat(t_philo *philo);
+void	ft_print_meals_eaten(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 
