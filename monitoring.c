@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/26 21:35:22 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:16:19 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int	ft_check_all_philos_ate_enough(t_monitoring *monitoring)
 {
 	int	i;
+	int	meals_eaten;
 
 	i = 0;
 	while (i < monitoring->data->number_of_philosophers)
 	{
 		pthread_mutex_lock(&monitoring->philo[i].meals_eaten_mutex);
-		if (monitoring->philo[i].meals_eaten < monitoring->data->meals_required)
+		meals_eaten = monitoring->philo[i].meals_eaten;
+		if (meals_eaten < monitoring->data->meals_required)
 		{
 			pthread_mutex_unlock(&monitoring->philo[i].meals_eaten_mutex);
 			return (0);
@@ -28,7 +30,36 @@ int	ft_check_all_philos_ate_enough(t_monitoring *monitoring)
 		pthread_mutex_unlock(&monitoring->philo[i].meals_eaten_mutex);
 		i++;
 	}
+	pthread_mutex_lock(&monitoring->data->printf_mutex);
+	printf("all philos ate enough\n");
+	pthread_mutex_unlock(&monitoring->data->printf_mutex);
 	return (1);
+}
+
+int	ft_check_philo_starve(t_monitoring *monitoring)
+{
+	long	time_in_ms;
+	int		i;
+	long	last_meal_time;
+
+	time_in_ms = ft_get_time_in_ms();
+	i = 0;
+	while (i < monitoring->data->number_of_philosophers)
+	{
+		pthread_mutex_lock(&monitoring->philo[i].last_meal_time_mutex);
+		last_meal_time = monitoring->philo[i].last_meal_time;
+		if (time_in_ms - last_meal_time >= monitoring->data->time_to_die)
+		{
+			usleep(1);
+			pthread_mutex_lock(&monitoring->data->printf_mutex);
+			printf("[%ldms] %d %s", time_in_ms - last_meal_time, monitoring->philo->id, "died\n");
+			pthread_mutex_unlock(&monitoring->data->printf_mutex);
+			return (1);
+		}
+		pthread_mutex_unlock(&monitoring->philo[i].last_meal_time_mutex);
+		i++;
+	}
+	return (0);
 }
 
 void	*ft_monitoring(void *param)
@@ -40,17 +71,14 @@ void	*ft_monitoring(void *param)
 	{
 		if (monitoring->data->meals_required != 0)
 		{
-			if (ft_check_all_philos_ate_enough(monitoring) == 1)
+			if (ft_check_all_philos_ate_enough(monitoring) == 1 || ft_check_philo_starve(monitoring) == 1)
 			{
 				pthread_mutex_lock(&monitoring->simulation_finished_mutex);
 				monitoring->simulation_finished = 1;
 				pthread_mutex_unlock(&monitoring->simulation_finished_mutex);
 			}
 		}
-		usleep(500 * 1000);
+		usleep(10);
 	}
-	pthread_mutex_lock(&monitoring->data->printf_mutex);
-	printf("ALL MEALS EATEN\n");
-	pthread_mutex_unlock(&monitoring->data->printf_mutex);
 	return (NULL);
 }

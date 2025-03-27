@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 20:00:46 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 21:37:12 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:27:49 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				meals_eaten;
 	pthread_mutex_t	meals_eaten_mutex;
+	long			last_meal_time;
+	pthread_mutex_t	last_meal_time_mutex;
 	t_monitoring	*monitoring;
 }	t_philo;
 
@@ -127,6 +129,7 @@ void	*ft_monitoring(void *param);
 
 // routine.c
 void	*ft_philo_routine(void *param);
+void	*ft_one_philo_routine(t_philo *philo);
 void	ft_print_info(t_philo *philo, char *str);
 
 // routine_actions.c
@@ -144,5 +147,6 @@ size_t	ft_strlen(char *str);
 int		ft_isspace(int c);
 int		ft_isdigit(int c);
 long	ft_get_time_in_ms(void);
+void	ft_usleep_interruptible(long time_to_usleep_in_ms, t_philo *philo);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:31:59 by julien            #+#    #+#             */
-/*   Updated: 2025/03/25 10:19:27 by julien           ###   ########.fr       */
+/*   Updated: 2025/03/27 10:54:45 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,21 @@ long	ft_get_time_in_ms(void)
 	gettimeofday(&time, NULL);
 	timestamp_in_ms = time.tv_sec * 1000 + time.tv_usec / 1000;
 	return (timestamp_in_ms);
+}
+
+void	ft_usleep_interruptible(long time_to_usleep_in_ms, t_philo *philo)
+{
+	long	start;
+	long	now;
+	int		finished;
+
+	start = ft_get_time_in_ms();
+	now = start;
+	finished = 0;
+	while (now - start < time_to_usleep_in_ms && !finished)
+	{
+		usleep(100);
+		now = ft_get_time_in_ms();
+		finished = ft_mutex_is_simulation_finished(philo->monitoring);
+	}
 }

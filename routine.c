@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 15:39:23 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:31:29 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,24 @@ void	*ft_philo_routine(void *param)
 	t_philo			*philo;
 
 	philo = (t_philo *)param;
-	while (!ft_mutex_is_simulation_finished(philo->monitoring)
-		&& (philo->data->meals_required == 0
-			|| (philo->meals_eaten < philo->data->meals_required)))
+	if (philo->data->number_of_philosophers == 1)
+		return (ft_one_philo_routine(philo));
+	while (!ft_mutex_is_simulation_finished(philo->monitoring) && (philo->data->meals_required == 0 || (philo->meals_eaten < philo->data->meals_required)))
 	{
 		ft_eat(philo);
-		pthread_mutex_lock(&philo->data->printf_mutex);
-		printf("%d has eaten %d times\n", philo->id, philo->meals_eaten);
-		pthread_mutex_unlock(&philo->data->printf_mutex);
 		ft_sleep(philo);
 		ft_think(philo);
 	}
+	return (NULL);
+}
+
+
+void	*ft_one_philo_routine(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	ft_print_info(philo, "has taken a fork\n");
+	ft_usleep_interruptible(philo->data->time_to_die, philo);
+	ft_mutex_unlock_forks(philo);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:25:26 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 21:35:12 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:06:07 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_destroy_and_free(t_data *data, t_philo *philo,
 	{
 		pthread_mutex_destroy(&data->forks[i]);
 		pthread_mutex_destroy(&philo[i].meals_eaten_mutex);
+		pthread_mutex_destroy(&philo[i].last_meal_time_mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&data->printf_mutex);

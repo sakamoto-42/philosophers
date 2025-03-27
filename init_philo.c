@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 11:00:58 by julien            #+#    #+#             */
-/*   Updated: 2025/03/26 16:20:15 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/26 22:04:17 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	ft_init_philo(t_data *data, t_philo *philo)
 		philo[i].data = data;
 		ft_set_forks(philo, i, data->number_of_philosophers);
 		philo[i].meals_eaten = 0;
+		philo[i].last_meal_time = ft_get_time_in_ms();
 		if (pthread_mutex_init(&philo[i].meals_eaten_mutex, NULL) != 0)
+			return (ERROR);
+		if (pthread_mutex_init(&philo[i].last_meal_time_mutex, NULL) != 0)
 			return (ERROR);
 		i++;
 	}
