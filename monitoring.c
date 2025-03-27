@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:53:24 by juduchar          #+#    #+#             */
-/*   Updated: 2025/03/27 15:29:18 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:00:13 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_check_all_philos_ate_enough(t_monitoring *monitoring)
 	if (!ft_mutex_is_simulation_finished(monitoring))
 	{
 		pthread_mutex_lock(&monitoring->data->printf_mutex);
-		printf("all philos ate enough\n");
+		printf("all (%d) philos ate enough (%d) meals\n", monitoring->data->number_of_philosophers, monitoring->data->meals_required);
 		pthread_mutex_unlock(&monitoring->data->printf_mutex);
 	}
 	return (1);
@@ -55,7 +55,7 @@ int	ft_check_philo_starve(t_monitoring *monitoring)
 		if (time_in_ms - last_meal_time > monitoring->data->time_to_die)
 		{
 			pthread_mutex_lock(&monitoring->data->printf_mutex);
-			printf("[%ldms] %d %s", ft_get_time_in_ms() - monitoring->data->start_time_in_ms,
+			printf("[%ldms] philo %d %s", ft_get_time_in_ms() - monitoring->data->start_time_in_ms,
 				monitoring->philo[i].id, "died\n");
 			pthread_mutex_unlock(&monitoring->data->printf_mutex);
 			return (1);

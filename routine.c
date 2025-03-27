@@ -6,7 +6,7 @@
 /*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 10:17:34 by julien            #+#    #+#             */
-/*   Updated: 2025/03/27 15:02:29 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:56:56 by juduchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_print_info(t_philo *philo, char *str)
 	if (!ft_mutex_is_simulation_finished(philo->monitoring))
 	{
 		timestamp_in_ms = ft_get_time_in_ms() - philo->data->start_time_in_ms;
-		printf("[%ldms] %d %s", timestamp_in_ms, philo->id, str);
+		printf("[%ldms] philo %d %s", timestamp_in_ms, philo->id, str);
 	}
 	pthread_mutex_unlock(&philo->data->printf_mutex);
 }
