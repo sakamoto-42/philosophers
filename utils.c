@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juduchar <juduchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:31:59 by julien            #+#    #+#             */
-/*   Updated: 2025/03/27 16:05:51 by juduchar         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:15:05 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	ft_isdigit(int c)
 	return (c >= 48 && c <= 57);
 }
 
-long	ft_get_time_in_ms(void)
+unsigned long	ft_get_time_in_ms(void)
 {
 	struct timeval	time;
-	long			timestamp_in_ms;
+	unsigned long	timestamp_in_ms;
 
 	gettimeofday(&time, NULL);
 	timestamp_in_ms = time.tv_sec * 1000 + time.tv_usec / 1000;
@@ -46,15 +46,16 @@ void	ft_usleep_interruptible(long time_to_usleep_in_ms, t_philo *philo)
 {
 	long	start;
 	long	now;
-	int		finished;
+	int		simulation_finished;
 
 	start = ft_get_time_in_ms();
-	now = start;
-	finished = 0;
-	while (now - start < time_to_usleep_in_ms && !finished)
+	now = ft_get_time_in_ms();
+	simulation_finished = ft_mutex_is_simulation_finished(philo->monitoring);
+	while (now - start < time_to_usleep_in_ms && !simulation_finished)
 	{
-		usleep(500);
+		usleep(100);
 		now = ft_get_time_in_ms();
-		finished = ft_mutex_is_simulation_finished(philo->monitoring);
+		simulation_finished = ft_mutex_is_simulation_finished(
+				philo->monitoring);
 	}
 }

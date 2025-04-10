@@ -5,19 +5,22 @@ CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -pthread
 
 SRCS_FILES = \
+	alloc_init_monitoring.c \
+	alloc_init_philos.c \
+	alloc_init.c \
+	create_threads.c \
 	debug.c \
 	destroy_and_free.c \
 	ft_atoi.c \
 	ft_itoa.c \
 	handle_errors.c \
-	init_data.c \
-	init_philo.c \
-	init_monitoring.c \
-	init_philo_and_monitoring.c \
+	init_table_and_forks.c \
+	join_threads.c \
 	monitoring.c \
 	mutex_utils.c \
 	parsing.c \
 	philo.c \
+	print_info.c \
 	routine.c \
 	routine_actions.c \
 	utils.c \
