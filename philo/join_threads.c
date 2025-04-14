@@ -6,47 +6,32 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:42:32 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 15:07:31 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/12 17:50:29 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_join_monitoring_thread(t_monitoring *monitoring)
+static void	ft_join_monitoring_thread(t_monitoring *monitoring)
 {
-	if (pthread_join(monitoring->thread_id, NULL) != 0)
-	{
-		ft_print_error("Error: pthread_join monitoring failed\n");
-		return (ERROR);
-	}
-	return (SUCCESS);
+	pthread_join(monitoring->thread_id, NULL);
 }
 
-static int	ft_join_philos_threads(t_table *table, t_philo *philo)
+static void	ft_join_philos_threads(t_table *table, t_philo *philo)
 {
 	int	i;
 
 	i = 0;
 	while (i < table->number_of_philosophers)
 	{
-		if (pthread_join(philo[i].thread_id, NULL) != 0)
-		{
-			ft_print_error("Error: pthread_join ");
-			ft_print_error(ft_itoa(i + 1));
-			ft_print_error(" failed\n");
-			return (ERROR);
-		}
+		pthread_join(philo[i].thread_id, NULL);
 		i++;
 	}
-	return (SUCCESS);
 }
 
-int	ft_join_monitoring_and_philos_threads(t_table *table,
+void	ft_join_monitoring_and_philos_threads(t_table *table,
 	t_monitoring *monitoring, t_philo *philo)
 {
-	if (ft_join_monitoring_thread(monitoring) == ERROR)
-		return (ERROR);
-	if (ft_join_philos_threads(table, philo) == ERROR)
-		return (ERROR);
-	return (SUCCESS);
+	ft_join_monitoring_thread(monitoring);
+	ft_join_philos_threads(table, philo);
 }

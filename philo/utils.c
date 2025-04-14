@@ -6,7 +6,7 @@
 /*   By: julien <julien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:31:59 by julien            #+#    #+#             */
-/*   Updated: 2025/04/10 15:15:05 by julien           ###   ########.fr       */
+/*   Updated: 2025/04/14 22:35:55 by julien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,29 @@ int	ft_isdigit(int c)
 	return (c >= 48 && c <= 57);
 }
 
-unsigned long	ft_get_time_in_ms(void)
+long	ft_get_time_in_ms(void)
 {
 	struct timeval	time;
-	unsigned long	timestamp_in_ms;
+	long			timestamp_in_ms;
 
 	gettimeofday(&time, NULL);
 	timestamp_in_ms = time.tv_sec * 1000 + time.tv_usec / 1000;
 	return (timestamp_in_ms);
 }
 
-void	ft_usleep_interruptible(long time_to_usleep_in_ms, t_philo *philo)
+void	ft_usleep_interruptible(t_table *table, t_monitoring *monitoring,
+	long time_to_usleep_in_ms)
 {
 	long	start;
 	long	now;
-	int		simulation_finished;
 
 	start = ft_get_time_in_ms();
-	now = ft_get_time_in_ms();
-	simulation_finished = ft_mutex_is_simulation_finished(philo->monitoring);
-	while (now - start < time_to_usleep_in_ms && !simulation_finished)
+	now = start;
+	while (now - start < time_to_usleep_in_ms)
 	{
-		usleep(100);
+		if (ft_mutex_is_simulation_finished(monitoring))
+			break ;
+		usleep(table->number_of_philosophers);
 		now = ft_get_time_in_ms();
-		simulation_finished = ft_mutex_is_simulation_finished(
-				philo->monitoring);
 	}
 }
